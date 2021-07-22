@@ -6,9 +6,9 @@ RUN		apt-get update && apt-get -y upgrade
 
 RUN		apt-get install -y nginx
 
-COPY	./srcs/nginx-conf /ets/nginx/sites-available/xz_site.conf
+COPY	./srcs/nginx-conf /etc/nginx/sites-available/xz_site.conf
 
-RUN				ln -s /ets/nginx/sites-available/xz_site.conf /etc/nginx/sites-enabled/xz_site.conf
+RUN				ln -s /etc/nginx/sites-available/xz_site.conf /etc/nginx/sites-enabled/xz_site.conf
 
 RUN				rm -Rf /etc/nginx/sites-enabled/default
 

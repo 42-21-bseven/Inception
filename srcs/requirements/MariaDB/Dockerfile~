@@ -1,0 +1,11 @@
+FROM debian:buster
+
+RUN apt-get update && apt-get -y upgrade
+
+RUN apt-get install -y vim mariadb-server php-mysql
+
+COPY ./conf/wp_database.sql /tmp
+
+COPY ./conf/init.sh /tmp
+
+ENTRYPOINT sh /tmp/init.sh

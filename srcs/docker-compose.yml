@@ -1,0 +1,43 @@
+version: '3.3'
+services:
+    nginx:
+        build: ./requirements/nginx
+        container_name: nginx
+        networks:
+            - inception
+        ports:
+            - "443:443"
+        restart: always
+        depends_on:
+            - wordpress
+    mariadb:
+        build: ./requirements/MariaDB
+        container_name: mariadb
+        networks:
+            - inception
+        restart: always
+    wordpress:
+        build: ./requirements/wordpress
+        container_name: wordpress
+        networks:
+            - inception
+        restart: always
+        depends_on:
+            - mariadb
+
+networks:
+    inception:
+
+volumes:
+    wp_vol:
+        driver: local
+        driver_opts:
+            type: "none"
+            o: "bind"
+            device: "/home/alexander/vol/wp"
+    db_vol:
+        driver: local
+        driver_opts:
+            type: "none"
+            o: "bind"
+            device: "/home/alexander/vol/db"

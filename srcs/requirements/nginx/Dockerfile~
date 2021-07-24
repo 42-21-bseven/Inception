@@ -25,4 +25,4 @@ COPY ./conf/*.sh /
 
 EXPOSE 443
 
-ENTRYPOINT  /usr/sbin/nginx -g "daemon off;"
+ENTRYPOINT sh init.sh && /bin/bash

@@ -4,18 +4,25 @@ FROM debian:buster
 
 RUN		apt-get update && apt-get -y upgrade
 
-RUN		apt-get install -y vim wget php-fpm php php-mbstring
+RUN		apt-get install -y vim wget php7.3-fpm php php-mbstring php-mysql
 
-RUN	wget https://wordpress.org/latest.tar.gz
+RUN	wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 
-RUN		tar -xvf latest.tar.gz && rm latest.tar.gz
+RUN chmod +x wp-cli.phar
 
-RUN			mkdir -p /var/www/xz_site
+RUN mv wp-cli.phar /usr/bin/wp
 
-RUN			mv wordpress /var/www/xz_site
+RUN mkdir -p /var/www/xz_site /run/php && cd /var/www/xz_site/
 
-COPY		./conf/wp-config.php /var/www/xz_site
+RUN wp core download --allow-root
+
+RUN    sed -i 's/;daemonize = yes/daemonize = no/g' /etc/php/7.3/fpm/pool.d/www.conf \
+    && echo "listen = 9000" >> /etc/php/7.3/fpm/pool.d/www.conf
+
+#RUN			mv wordpress /var/www/xz_site
+
+COPY		./conf/wp-config.php /tmp
 
 COPY		./conf/init_wp.sh /
 
-
+ENTRYPOINT	sh init_wp.sh

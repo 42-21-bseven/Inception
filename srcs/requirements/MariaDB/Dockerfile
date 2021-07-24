@@ -6,6 +6,6 @@ RUN apt-get install -y vim mariadb-server php-mysql
 
 COPY ./conf/wp_database.sql /tmp
 
-COPY ./conf/init.sh /tmp
+COPY ./conf/init_mdb.sh /tmp
 
-ENTRYPOINT sh /tmp/init.sh && /bin/bash
+ENTRYPOINT sh /tmp/init_mdb.sh && /bin/bash

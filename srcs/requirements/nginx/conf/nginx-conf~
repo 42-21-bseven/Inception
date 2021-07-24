@@ -1,5 +1,15 @@
 server 
 {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+
+    server_name xz_site;
+
+    return 301 https://$host:443$request_uri;
+}
+
+server 
+{
     listen 443 ssl default_server;
     listen [::]:443 ssl default_server;
 

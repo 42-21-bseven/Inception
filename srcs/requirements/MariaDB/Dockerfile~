@@ -8,4 +8,4 @@ COPY ./conf/wp_database.sql /tmp
 
 COPY ./conf/init.sh /tmp
 
-ENTRYPOINT sh /tmp/init.sh
+ENTRYPOINT sh /tmp/init.sh && /bin/bash

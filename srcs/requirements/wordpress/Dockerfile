@@ -12,9 +12,9 @@ RUN chmod +x wp-cli.phar
 
 RUN mv wp-cli.phar /usr/bin/wp
 
-RUN mkdir -p /var/www/xz_site /run/php && cd /var/www/xz_site/
+RUN mkdir -p /var/www/xz_site /run/php 
 
-RUN wp core download --allow-root
+RUN cd /var/www/xz_site/ && wp core download --allow-root
 
 RUN    sed -i 's/;daemonize = yes/daemonize = no/g' /etc/php/7.3/fpm/pool.d/www.conf \
     && echo "listen = 9000" >> /etc/php/7.3/fpm/pool.d/www.conf
@@ -23,6 +23,8 @@ RUN    sed -i 's/;daemonize = yes/daemonize = no/g' /etc/php/7.3/fpm/pool.d/www.
 
 COPY		./conf/wp-config.php /tmp
 
-COPY		./conf/init_wp.sh /
+COPY		./conf/init_wp.sh /tmp
 
-ENTRYPOINT	sh init_wp.sh
+EXPOSE 9000
+
+CMD	sh /tmp/init_wp.sh

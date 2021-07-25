@@ -5,8 +5,11 @@ server
 
     server_name xz_site;
 
+    ssl on;
     ssl_certificate /etc/nginx/ssl/private.pem;
     ssl_certificate_key /etc/nginx/ssl/public.key;
+
+    ssl_protocols TLSv1.2 TLSv1.3;
 
     root /var/www/xz_site;
     index index.html index.htm index.nginx-debian.html index.php;
@@ -18,6 +21,6 @@ server
 
     location ~ \.php$ {
         include snippets/fastcgi-php.conf;
-        fastcgi_pass unix:/var/run/php/php7.3-fpm.sock;
+        fastcgi_pass wordpress:9000;
     }
 }

@@ -8,21 +8,12 @@ RUN		apt-get install -y nginx
 
 COPY	./conf/nginx-conf /etc/nginx/sites-available/xz_site.conf
 
-RUN				ln -s /etc/nginx/sites-available/xz_site.conf /etc/nginx/sites-enabled/xz_site.conf
-
-RUN				rm -Rf /etc/nginx/sites-enabled/default
-
 RUN		apt-get install -y openssl
 
-RUN				mkdir /etc/nginx/ssl/
-
-RUN				openssl req -newkey rsa:4096 -x509 -sha256 -days 365 -nodes -out /etc/nginx/ssl/private.pem -keyout /etc/nginx/ssl/public.key -subj "/C=RU/L=KAZAN/OU=21school/"
-
-RUN				openssl rsa -noout -text -in /etc/nginx/ssl/public.key
-
-
-COPY ./conf/*.sh /
+COPY    ./conf/*.sh /tmp/
 
 EXPOSE 443
 
-ENTRYPOINT  /usr/sbin/nginx -g "daemon off;"
+RUN sh /tmp/init.sh
+
+ENTRYPOINT /usr/sbin/nginx -g "daemon off;"

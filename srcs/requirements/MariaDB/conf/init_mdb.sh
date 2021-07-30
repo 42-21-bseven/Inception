@@ -12,4 +12,3 @@ if [ ! -f /tmp/ok ]; then
 fi
 
 /usr/bin/mysqld_safe
-

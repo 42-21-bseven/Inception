@@ -12,14 +12,12 @@ RUN chmod +x wp-cli.phar
 
 RUN mv wp-cli.phar /usr/bin/wp
 
-RUN mkdir -p /var/www/xz_site /run/php 
+RUN mkdir -p /var/www/xz_site /run/php
 
 RUN cd /var/www/xz_site/ && wp core download --allow-root
 
 RUN    sed -i 's/;daemonize = yes/daemonize = no/g' /etc/php/7.3/fpm/pool.d/www.conf \
     && echo "listen = 9000" >> /etc/php/7.3/fpm/pool.d/www.conf
-
-#RUN			mv wordpress /var/www/xz_site
 
 COPY		./conf/wp-config.php /tmp
 
